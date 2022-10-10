@@ -8,7 +8,6 @@
 import CoreData
 
 protocol CoreDataManagerInterface: AnyObject {
-    var persistentContainer: NSPersistentContainer { get }
     func saveContext()
     func insertPerson(fullname: String, phoneNumber: String, id: UUID) -> Person?
     func fetchPeople() -> [Person]?

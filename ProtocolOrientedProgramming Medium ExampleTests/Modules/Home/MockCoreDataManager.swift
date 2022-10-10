@@ -10,16 +10,6 @@ import CoreData
 
 final class MockCoreDataManager: CoreDataManagerInterface {
 
-    var invokedPersistentContainerGetter = false
-    var invokedPersistentContainerGetterCount = 0
-    var stubbedPersistentContainer: NSPersistentContainer!
-
-    var persistentContainer: NSPersistentContainer {
-        invokedPersistentContainerGetter = true
-        invokedPersistentContainerGetterCount += 1
-        return stubbedPersistentContainer
-    }
-
     var invokedSaveContext = false
     var invokedSaveContextCount = 0
 

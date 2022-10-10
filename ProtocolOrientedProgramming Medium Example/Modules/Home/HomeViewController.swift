@@ -43,7 +43,7 @@ final class HomeViewController: UIViewController {
         textFieldPhoneNumber.text = ""
     }
 
-    func savePerson() {
+    private func savePerson() {
         guard let textFieldName = textFieldName.text, let textFieldPhoneNumber = textFieldPhoneNumber.text else { return self.showAlert(title: ConstantsHomeVC.messageCouldntSave, message: ConstantsHomeVC.messageFillLines)}
 
         viewModel?.textFieldName = textFieldName

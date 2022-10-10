@@ -102,17 +102,15 @@
 			children = (
 				D6BB628028F3ECF200A9B50C /* Modules */,
 				D6BB627F28F3ECE300A9B50C /* Views */,
-				D6BB624A28F3DB3800A9B50C /* AppDelegate.swift */,
-				D6BB624C28F3DB3800A9B50C /* SceneDelegate.swift */,
 				D6BB628A28F400FD00A9B50C /* Extensions */,
 				D6BB62A028F4362000A9B50C /* Utilities */,
-				D6BB625028F3DB3800A9B50C /* Main.storyboard */,
+				D6BB624A28F3DB3800A9B50C /* AppDelegate.swift */,
+				D6BB624C28F3DB3800A9B50C /* SceneDelegate.swift */,
+				D6BB627D28F3DC1800A9B50C /* CoreDataManager.swift */,
 				D6BB625628F3DB3B00A9B50C /* Assets.xcassets */,
 				D6BB625828F3DB3B00A9B50C /* LaunchScreen.storyboard */,
 				D6BB625B28F3DB3B00A9B50C /* Info.plist */,
 				D6BB625328F3DB3800A9B50C /* ProtocolOrientedProgramming_Medium_Example.xcdatamodeld */,
-				D6BB627D28F3DC1800A9B50C /* CoreDataManager.swift */,
-				D6BB628428F3EDFE00A9B50C /* Constants.swift */,
 			);
 			path = "ProtocolOrientedProgramming Medium Example";
 			sourceTree = "<group>";
@@ -145,6 +143,7 @@
 		D6BB628128F3ED1900A9B50C /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				D6BB625028F3DB3800A9B50C /* Main.storyboard */,
 				D6BB624E28F3DB3800A9B50C /* HomeViewController.swift */,
 				D6BB628228F3ED4D00A9B50C /* HomeViewModel.swift */,
 			);
@@ -181,6 +180,7 @@
 		D6BB62A028F4362000A9B50C /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				D6BB628428F3EDFE00A9B50C /* Constants.swift */,
 				D6BB629E28F4361C00A9B50C /* Validator.swift */,
 			);
 			path = Utilities;
