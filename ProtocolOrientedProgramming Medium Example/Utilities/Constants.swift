@@ -25,7 +25,11 @@ struct ConstantsHomeVC {
     static let messageDone = "Done"
     static let messageFillLines = "Please fill the lines"
     static let messageCouldntSave = "Failed to save!"
+    static let messageError = "Error"
 
     static let personCellIdentifier = "PersonCell"
     static let personCellHeight = 77.0
+
+    static let messagePersonDeleted = "Deleted"
+    static let messagePersonSuccessfullyDeleted = "Person deleted successfully!"
 }

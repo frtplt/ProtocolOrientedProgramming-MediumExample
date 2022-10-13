@@ -27,7 +27,7 @@ final class HomeViewModelTests: XCTestCase {
         view = nil
     }
 
-    func test_viewDidLoad() {
+    func test_viewDidLoad_InvokesRequiredMethods() {
         XCTAssertFalse(view.invokedSetupUI)
         XCTAssertFalse(coreDataManager.invokedFetchPeople)
 
@@ -37,7 +37,7 @@ final class HomeViewModelTests: XCTestCase {
         XCTAssertEqual(coreDataManager.invokedFetchPeopleCount, 1)
     }
 
-    func test_fetchPeople() {
+    func test_fetchPeople_InvokesFetchPeople() {
         XCTAssertFalse(coreDataManager.invokedFetchPeople)
 
         viewModel.fetchPeople()
@@ -45,47 +45,40 @@ final class HomeViewModelTests: XCTestCase {
         XCTAssertEqual(coreDataManager.invokedFetchPeopleCount, 1)
     }
 
-    func test_isValidTextFields_WhenInputFalse() {
-        XCTAssertFalse(view.invokedShowAlert)
-
-        viewModel.isValidTextFields(textFieldName: "Test", textFieldPhoneNumber: "Test")
-
-        XCTAssertEqual(view.invokedShowAlertCount, 1)
-    }
-
-    func test_isValidTextFields_WhenInputTrue() {
-        XCTAssertFalse(view.invokedShowAlert)
-
-        viewModel.isValidTextFields(textFieldName: "Test", textFieldPhoneNumber: "5334000000")
-
-        XCTAssertEqual(view.invokedShowAlertCount, 0)
-    }
-
     func test_savePerson_whenInputFalse() {
         XCTAssertFalse(view.invokedShowAlert)
+        XCTAssertTrue(view.invokedShowAlertParametersList.isEmpty)
 
         viewModel.savePerson(fullname: "Test", phoneNumber: "Test")
 
         XCTAssertEqual(view.invokedShowAlertCount, 2)
+        XCTAssertEqual(view.invokedShowAlertParameters.map(\.message), ConstantsHomeVC.messageError)
+        XCTAssertEqual(view.invokedShowAlertParameters.map(\.title), ConstantsHomeVC.messageError)
     }
 
     func test_savePerson_whenInputTrue() {
         XCTAssertFalse(view.invokedShowAlert)
+        XCTAssertTrue(view.invokedShowAlertParametersList.isEmpty)
 
         viewModel.savePerson(fullname: "Test", phoneNumber: "5334000000")
 
         XCTAssertEqual(view.invokedShowAlertCount, 1)
+        XCTAssertEqual(view.invokedShowAlertParameters.map(\.message), ConstantsHomeVC.messagePersonSuccessfully)
+        XCTAssertEqual(view.invokedShowAlertParameters.map(\.title), ConstantsHomeVC.messagePersonSaved)
     }
 
-    func test_deletePerson() {
+    func test_deletePerson_InvokesRequiredMethods() {
         XCTAssertFalse(coreDataManager.invokedDelete)
         XCTAssertFalse(view.invokedSetupUI)
         XCTAssertFalse(coreDataManager.invokedFetchPeople)
+        XCTAssertTrue(view.invokedShowAlertParametersList.isEmpty)
 
         viewModel.deletePerson(id: UUID(), indexpath: 1)
 
         XCTAssertEqual(coreDataManager.invokedDeleteCount, 1)
         XCTAssertEqual(view.invokedSetupUICount, 1)
         XCTAssertEqual(coreDataManager.invokedFetchPeopleCount, 1)
+        XCTAssertEqual(view.invokedShowAlertParameters.map(\.message), ConstantsHomeVC.messagePersonSuccessfullyDeleted)
+        XCTAssertEqual(view.invokedShowAlertParameters.map(\.title), ConstantsHomeVC.messagePersonDeleted)
     }
 }

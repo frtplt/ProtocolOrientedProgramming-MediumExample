@@ -10,10 +10,7 @@ import Foundation
 protocol HomeViewModelInterface: AnyObject {
     var numberOfRows: Int { get }
     var numberOfSections: Int { get }
-    var textFieldName: String { get set }
-    var textFieldPhoneNumber: String { get set }
     func savePerson(fullname: String, phoneNumber: String)
-    func isValidTextFields(textFieldName: String, textFieldPhoneNumber: String) -> Bool
     func notifyViewDidLoad()
     func fetchPeople() -> [Person]?
     func getPersonData(with index: Int) -> Person
@@ -26,23 +23,21 @@ final class HomeViewModel {
     var coreDataManager: CoreDataManagerInterface?
 
     var people: [Person]?
-    var textFieldName: String = ""
-    var textFieldPhoneNumber: String = ""
 
     init(view: HomeViewControllerInterface?, coreDataManager: CoreDataManagerInterface? = CoreDataManager.shared) {
         self.view = view
         self.coreDataManager = coreDataManager
     }
 
-    func savePerson(fullname: String, phoneNumber: String) {
-        if isValidTextFields(textFieldName: fullname, textFieldPhoneNumber: phoneNumber) {
-            coreDataManager?.insertPerson(fullname: textFieldName, phoneNumber: textFieldPhoneNumber, id: UUID())
-            self.view?.showAlert(title: ConstantsHomeVC.messagePersonSaved, message: ConstantsHomeVC.messagePersonSuccessfully)
-            fetchPeople()
+    private func isValidTextFields(textFieldName: String, textFieldPhoneNumber: String) -> Bool {
+        if textFieldName.isEmpty || !textFieldName.isValid(.name) {
+            view?.showAlert(title: ConstantsHomeVC.messageWarning, message: ConstantsHomeVC.messagePersonNameNotValid)
+            return false
+        } else if textFieldPhoneNumber.isEmpty || !textFieldPhoneNumber.isValid(.phoneNumber) {
+            view?.showAlert(title: ConstantsHomeVC.messageWarning, message: ConstantsHomeVC.messagePhoneNumberNotValid)
+            return false
         }
-        else {
-            self.view?.showAlert(title: "error", message: "error")
-        }
+        return true
     }
 }
 
@@ -75,18 +70,19 @@ extension HomeViewModel: HomeViewModelInterface {
     func deletePerson(id: UUID, indexpath: Int) {
         people?.remove(at: indexpath)
         coreDataManager?.delete(id: id)
+        self.view?.showAlert(title: ConstantsHomeVC.messagePersonDeleted, message: ConstantsHomeVC.messagePersonSuccessfullyDeleted)
         notifyViewDidLoad()
     }
 
-    func isValidTextFields(textFieldName: String, textFieldPhoneNumber: String) -> Bool {
-        if textFieldName.isEmpty || !textFieldName.isValid(.name) {
-            view?.showAlert(title: ConstantsHomeVC.messageWarning, message: ConstantsHomeVC.messagePersonNameNotValid)
-            return false
-        } else if textFieldPhoneNumber.isEmpty || !textFieldPhoneNumber.isValid(.phoneNumber) {
-            view?.showAlert(title: ConstantsHomeVC.messageWarning, message: ConstantsHomeVC.messagePhoneNumberNotValid)
-            return false
+    func savePerson(fullname: String, phoneNumber: String) {
+        if isValidTextFields(textFieldName: fullname, textFieldPhoneNumber: phoneNumber) {
+            coreDataManager?.insertPerson(fullname: fullname, phoneNumber: phoneNumber, id: UUID())
+            self.view?.showAlert(title: ConstantsHomeVC.messagePersonSaved, message: ConstantsHomeVC.messagePersonSuccessfully)
+            fetchPeople()
         }
-        return true
+        else {
+            self.view?.showAlert(title: ConstantsHomeVC.messageError, message: ConstantsHomeVC.messageError)
+        }
     }
 }
 

@@ -46,9 +46,6 @@ final class HomeViewController: UIViewController {
     private func savePerson() {
         guard let textFieldName = textFieldName.text, let textFieldPhoneNumber = textFieldPhoneNumber.text else { return self.showAlert(title: ConstantsHomeVC.messageCouldntSave, message: ConstantsHomeVC.messageFillLines)}
 
-        viewModel?.textFieldName = textFieldName
-        viewModel?.textFieldPhoneNumber = textFieldPhoneNumber
-
         viewModel?.savePerson(fullname: textFieldName, phoneNumber: textFieldPhoneNumber)
     }
 }
@@ -77,8 +74,9 @@ extension HomeViewController: HomeViewControllerInterface {
     }
 }
 
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+// Tableview methods
 
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         ConstantsHomeVC.personCellHeight
     }
